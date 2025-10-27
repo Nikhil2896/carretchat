@@ -36,7 +36,7 @@ const Name = props => {
           style={styles.textInput}
           onChangeText={setName}
           value={name}
-          placeholder="Enter Name"
+          placeholder="Enter your name"
           placeholderTextColor={Theme.colors.placeHolder}
           maxLength={20}
           selectionColor={Theme.colors.primaryColor}

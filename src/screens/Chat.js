@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Chat = () => {
+const Chat = props => {
+  useEffect(() => {
+    console.log(props.route.params);
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text>Chat</Text>

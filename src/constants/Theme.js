@@ -15,7 +15,7 @@ export const Theme = {
     medium: 14,
     regular: 16,
     large: 20,
-    xLarge: 24,
+    xLarge: 28,
     heading: 40,
   },
 };
