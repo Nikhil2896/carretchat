@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const Home = () => {
+const Home = props => {
+  const [name, setName] = useState();
+
+  useEffect(() => {
+    setName(props.route.params.name);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Text>Hello {name}</Text>
     </View>
   );
 };
