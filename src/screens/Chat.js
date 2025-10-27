@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
 import Theme from '../constants/Theme';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -37,7 +37,7 @@ const InputView = props => {
         value={newMessage}
         placeholder="Your message....."
         placeholderTextColor={Theme.colors.placeHolder}
-        maxLength={20}
+        maxLength={300}
         selectionColor={Theme.colors.primaryColor}
       />
       <View style={styles.sendButton}>
@@ -57,6 +57,7 @@ const Chat = props => {
   const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
+    setMessageList([]);
     const date = new Date();
     const messageId = date.getTime();
     let firstMessage = {
@@ -69,8 +70,30 @@ const Chat = props => {
     setMessageList([...messageList, firstMessage]);
   }, []);
 
+  const renderMessages = ({ item }) => {
+    return (
+      <View
+        style={[
+          styles.messageView,
+          item.senderId === 12345 ? styles.myMessage : styles.othersMessage,
+        ]}
+      >
+        <Text style={{ color: Theme.colors.white }}>{item.message}</Text>
+      </View>
+    );
+  };
+
   const MessagesView = () => {
-    return <View style={{ flex: 1 }}></View>;
+    return (
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={messageList}
+          renderItem={renderMessages}
+          keyExtractor={item => item.id}
+          contentContainerStyle={styles.flatlist}
+        />
+      </View>
+    );
   };
 
   return (
@@ -93,7 +116,7 @@ const styles = StyleSheet.create({
   sendView: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginVertical: 10,
   },
   textInput: {
     borderWidth: 2,
@@ -108,6 +131,27 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.primaryColor,
     padding: 10,
     borderRadius: 50,
+  },
+  messageView: {
+    maxWidth: '75%',
+    padding: 10,
+    borderRadius: 16,
+    marginVertical: 5,
+  },
+  myMessage: {
+    backgroundColor: Theme.colors.primaryColor,
+    alignSelf: 'flex-end',
+    borderBottomRightRadius: 0,
+  },
+  othersMessage: {
+    backgroundColor: Theme.colors.placeHolder,
+    alignSelf: 'flex-start',
+    borderBottomLeftRadius: 0,
+  },
+  flatlist: {
+    flexGrow: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 10,
   },
 });
 
